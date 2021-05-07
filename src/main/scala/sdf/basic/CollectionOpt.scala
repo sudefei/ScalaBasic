@@ -2,7 +2,7 @@ package sdf.basic
 
 import java.awt.Color
 
-import scala.collection.{LinearSeq, SortedSet, mutable}
+import scala.collection.{LinearSeq, SortedSet, immutable, mutable}
 
 /**
   * @Author defei.su
@@ -55,10 +55,18 @@ object CollectionOpt {
     * 减法 ： - 和 -- , 移除一个或者多个元素从集合中，生成一个新集合
     * Set 运算交集,并集，差集
     */
+  // Set 无序，唯一
+  // List 有序，可重复
+  // Map  键值对集合
   def SetOperation(): Unit ={
     // 是否包含  xs contains x / xs(x) / xs subsetOf ys
     val xs = Set("hadoop","spark","yarn","kafka")
     val ys = Set("scala")
+
+    immutable.HashSet()
+    mutable.HashSet()
+
+
     val yarnBoolean = xs ("yarn")
     val javaBoolean = xs.contains("java")
     val ysBoolean = xs.subsetOf(ys)
@@ -207,7 +215,13 @@ object CollectionOpt {
     nums.toIterable  // Iterable[Int] = List(1, 2, 3, 4)
     nums.toSeq       //  scala.collection.immutable.Seq[Int] = List(1, 2, 3, 4)
     nums.toVector    // Vector[Int] = Vector(1, 2, 3, 4)
-    nums.toStream    //  scala.collection.immutable.Stream[Int] = Stream(1, ?)
+    val stream: immutable.Seq[Int] = nums.toStream    //  scala.collection.immutable.Stream[Int] = Stream(1, ?)
+    stream.foreach(x => println(x))   // 1 2 3 4
+    stream.foreach(println)           // 1 2 3 4
+
+
+    nums.toBuffer    //scala.collection.mutable.Buffer[Int] = ArrayBuffer(1, 2, 3, 4)
+
 
     /** List 伴生对象方法
       */

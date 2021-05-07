@@ -40,7 +40,7 @@
   </property>
   <property>
     <name>hbase.fs.tmp.dir</name>
-    <value>/user/wisdom/hbase-staging</value>
+    <value>/user/${user.name}/hbase-staging</value>
   </property>
   <!--'hbase.client.scanner.timeout.period', originally set to '60000' (non-final), is overridden below by a safety valve-->
   <property>

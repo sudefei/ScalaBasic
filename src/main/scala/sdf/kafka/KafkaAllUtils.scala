@@ -174,9 +174,9 @@ object KafkaAllUtils {
           val key = record.key()
           val value = record.value()
           val time = record.timestamp()
-          val headers = record.headers()
+//          val headers = record.headers()
           val partition = record.partition()
-          println(s"${time}下 ${topicName} 的 offset 为: ${topic_offset},key 为: ${key} ,value 为${value},Header 为 ${headers},Partition 为 ${partition}")
+          println(s"${time}下 ${topicName} 的 offset 为: ${topic_offset},key 为: ${key} ,value 为${value},Header 为,Partition 为 ${partition}")
         }
         // 处理完最后一批消息后，使用 commmitSync() 提交偏移量
         // CommitSync()
@@ -238,9 +238,9 @@ object KafkaAllUtils {
           val key = record.key()
           val value = record.value()
           val time = record.timestamp()
-          val headers = record.headers()
+//          val headers = record.headers()
           val partition = record.partition()
-          println(s"${time}下 ${topicName} 的 offset 为: ${topic_offset},key 为: ${key} ,value 为${value},Header 为 ${headers},Partition 为 ${partition}")
+          println(s"${time}下 ${topicName} 的 offset 为: ${topic_offset},key 为: ${key} ,value 为${value},Header 为 ,Partition 为 ${partition}")
         }
       }
       // 同步提交，手动提交。

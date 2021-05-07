@@ -1,23 +1,40 @@
-package sdf.spark
-
-//import org.apache.spark.streaming._
-import org.apache.spark.storage.StorageLevel
-import org.apache.spark.{SparkConf, SparkContext}
+//package sdf.spark
+//
+//import kafka.serializer.StringDecoder
+//import org.apache.kafka.clients.consumer.ConsumerConfig
+//import org.apache.kafka.common.serialization.StringDeserializer
+//import org.apache.spark.streaming.dstream.ReceiverInputDStream
+//import org.apache.spark.streaming.{Seconds, StreamingContext}
+//import org.apache.spark.storage.StorageLevel
+//import org.apache.spark.{SparkConf, SparkContext}
 //import org.apache.spark.streaming.dstream.DStream
-import org.apache.spark.rdd.RDD
-
-import scala.collection.mutable
-
-/** SparkCore  sc:SparkContext 处理 RDD
-  * SparkSQL   spark:SQLContext、HiveContext、SparkSession 处理 DataFrame
-  * SparkStreaming  ssc:SparkStreamingContext 处理实时数据
-  */
-
-object SparkStreamingDemo {
+//import org.apache.spark.streaming
+//import org.apache.spark.streaming.kafka._
+//import org.apache.spark.rdd.RDD
+//import org.apache.spark.streaming.kafka.KafkaUtils
+//
+//import scala.collection.mutable
+//
+///** SparkCore  sc:SparkContext 处理 RDD
+//  * SparkSQL   spark:SQLContext、HiveContext、SparkSession 处理 DataFrame
+//  * SparkStreaming  ssc:SparkStreamingContext 处理实时数据
+//  */
+//
+//object SparkStreamingDemo {
 //
 //  val sparkConf=new SparkConf().setAppName("wcStreaming").setMaster("local")
 //  val sc=new SparkContext(sparkConf)
 //  val ssc=new StreamingContext(sc,Seconds(1))
+//
+//
+//  def main(args: Array[String]): Unit = {
+//    val lines = ssc.textFileStream("hdfs://master2.cm.com:8020/tmp/logs/wordCuont/")
+//    val words = lines.flatMap(_.split(" "))
+//    val wordCounts: DStream[(String, Int)] = words.map(x=>(x,1)).reduceByKey(_+_)
+//    wordCounts.print()
+//    ssc.start()             //开启流计算
+//    ssc.awaitTermination()  //运行过程发生错误的时候中断操作,不错的话一直运行
+//  }
 //
 //  def wordCount(lines : DStream[scala.Predef.String]): Unit ={
 //    val wordList = lines.flatMap(_.split(" "))
@@ -81,6 +98,39 @@ object SparkStreamingDemo {
 //    //手动关闭
 //    ssc.stop()
 //  }
-
-
-}
+//
+//  /**
+//    * sparkStreaming 读取 kafka 数据流
+//    */
+//  def sscReadKafka(): Unit ={
+//
+//    ssc.checkpoint("")
+//    //创建kafka对象   生产者 和消费者
+//    //模式1 采取的是 receiver 方式  reciver 每次只能读取一条记录
+//    val topic = Map("mydemo2" -> 1)
+//    //直接读取的方式  由于kafka 是分布式消息系统需要依赖Zookeeper
+//    val data = KafkaUtils.createStream(ssc, "192.168.128.111:2181", "mygroup", topic, StorageLevel.MEMORY_AND_DISK)
+//
+//    //
+//    val kafkaPrams = Map[String,String]("metadata.broker.list" -> "192.168.128.111:9092")
+//    val topics = Set("mydemo2")
+//    val data_02 = KafkaUtils.createDirectStream[String,String,StringDecoder,StringDecoder](ssc, kafkaPrams, topics)
+//
+//    //数据累计计算
+//    val updateFunc =(curVal:Seq[Int],preVal:Option[Int])=>{
+//      //进行数据统计当前值加上之前的值
+//      var total = curVal.sum
+//      //最初的值应该是0
+//      var previous = preVal.getOrElse(0)
+//      //Some 代表最终的返回值
+//      Some(total+previous)
+//  }
+//
+//    val result = data.map(_._2).flatMap(_.split(" ")).map(word=>(word,1)).updateStateByKey(updateFunc).print()
+//    ssc.start()
+//    ssc.awaitTermination()
+//
+//  }
+//
+//
+//}

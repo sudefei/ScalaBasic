@@ -54,7 +54,7 @@ object MultiArray {
     println()
   }
 
-  def forUtil(): Unit ={
+  def forUntil(): Unit ={
     println("=================> for until")
     // util 左右两边为前闭后开的访问
     // 1 ，2

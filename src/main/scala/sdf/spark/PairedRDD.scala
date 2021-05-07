@@ -4,7 +4,8 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object PairedRDD {
   /*** PairRDD指的是 （key,value） 类型的RDD
-    * PairRdd 有很多特有的方法，常见的操作有 reduceByKey() | groupByKey() | keys() | values() | combineByKey() | join() | mapValues(func) |sortByKey()
+    * PairRdd 有很多特有的方法，常见的操作有 reduceByKey() | groupByKey() | keys() | values() | combineByKey() | join()
+    * | mapValues(func) |sortByKey() | sortBy(指定字段)
     */
   val conf=new SparkConf().setAppName("RddPartition").setMaster("local[2]")
   val sc=new SparkContext(conf)

@@ -1,23 +1,17 @@
 package sdf.spark
 
+import java.sql.DriverManager
+
+import org.apache.hadoop.hbase.HBaseConfiguration
+import org.apache.spark.rdd.JdbcRDD
+import org.apache.spark.sql._
 import org.apache.spark.{SparkConf, SparkContext}
 
 import scala.util.parsing.json.JSON
-import org.apache.spark.rdd.JdbcRDD
-import org.apache.hadoop.fs.{FileSystem, FileUtil, Path}
-import org.apache.hadoop.hbase.HBaseConfiguration
-import org.apache.hadoop.hbase.io._
-import org.apache.spark.sql.types.StructType
-import org.apache.spark.sql._
-import java.io.File
-import java.sql.DriverManager
-import java.io.StringReader
 
 //import au.com.bytecode.opencsv.CSVReader
 
 //import org.apache.hadoop.hbase.mapreduce.TableInputFormat
-
-import scala.io.Source
 
 
 object FileInputOutput {
@@ -150,9 +144,9 @@ object FileInputOutput {
       .option("password", password)
   }
 
-  def getMysqlSchema(sQLContext: SQLContext): StructType = {
+  def getMysqlSchema(sQLContext: SQLContext) = {
     getMysqlReader(sQLContext).option("dbtable", dbtable)
-      .load().schema
+      .load()
   }
 
   def writeMysqlTable(dataFrame: DataFrame, tableName: String, saveMode: SaveMode): Unit = {
@@ -169,9 +163,9 @@ object FileInputOutput {
       .option("password", password)
   }
 
-  def getOracleSchema(sQLContext: SQLContext): StructType = {
+  def getOracleSchema(sQLContext: SQLContext) = {
     getOracleReader(sQLContext).option("dbtable", dbtable)
-      .load().schema
+      .load()
   }
 
   def getPhoenixReader_01(sQLContext: SQLContext): DataFrameReader ={

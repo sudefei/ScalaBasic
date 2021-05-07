@@ -68,7 +68,7 @@ case class DD(name:String)
 
   def caseClassDiff(): Unit ={
 
-    /**  1. case class 初始化的时候可以不用 nes ,淡然也可以加上，但是普通类就一定需要 new */
+    /**  1. case class 初始化的时候可以不用 new ,当然也可以加上，但是普通类就一定需要 new */
     val aa =new AA("hdfs")
     val dd =DD("yarn")
 
